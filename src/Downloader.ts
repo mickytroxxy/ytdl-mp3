@@ -1,10 +1,7 @@
 import os from 'os';
 import path from 'path';
-
 import NodeID3 from 'node-id3';
-import ytdl from 'ytdl-core';
-import type { videoInfo as VideoInfo } from 'ytdl-core';
-
+import ytdl, { videoInfo as VideoInfo } from 'ytdl-core';
 import { FormatConverter } from './FormatConverter';
 import { SongTagsSearch } from './SongTagsSearch';
 import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
@@ -57,7 +54,7 @@ export class Downloader {
   /** Returns the content from the video as a buffer */
   private async downloadVideo(videoInfo: VideoInfo): Promise<Buffer> {
     const buffers: Buffer[] = [];
-    const stream = ytdl.downloadFromInfo(videoInfo, { quality: 'highestaudio' }); // .pipe(fs.createWriteStream(outputFile));
+    const stream = ytdl.downloadFromInfo(videoInfo, { quality: 'highestaudio' });
     return new Promise((resolve, reject) => {
       stream.on('data', (chunk: Buffer) => {
         buffers.push(chunk);
